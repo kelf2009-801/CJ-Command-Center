@@ -1,800 +1,467 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlamBot — Ваш онлайн-администратор для бровей и ресниц</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        primary: '#8B5CF6',
-                        secondary: '#EC4899',
-                        accent: '#F59E0B',
-                        dark: '#1F2937',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #F59E0B 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .mesh-bg {
-            background-color: #1a1a2e;
-            background-image: 
-                radial-gradient(at 40% 20%, hsla(28,100%,74%,1) 0px, transparent 50%),
-                radial-gradient(at 80% 0%, hsla(289,100%,56%,1) 0px, transparent 50%),
-                radial-gradient(at 0% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
-                radial-gradient(at 80% 50%, hsla(340,100%,76%,1) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, hsla(22,100%,77%,1) 0px, transparent 50%),
-                radial-gradient(at 80% 100%, hsla(242,100%,70%,1) 0px, transparent 50%),
-                radial-gradient(at 0% 0%, hsla(343,100%,76%,1) 0px, transparent 50%);
-        }
-        
-        .card-hover {
-            transition: all 0.3s ease;
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
-        }
-        
-        .typing-cursor::after {
-            content: '|';
-            animation: blink 1s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-        
-        .scroll-reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-        
-        .scroll-reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .blob {
-            position: absolute;
-            filter: blur(40px);
-            opacity: 0.5;
-            animation: move 20s infinite alternate;
-        }
-        
-        @keyframes move {
-            from { transform: translate(0, 0) scale(1); }
-            to { transform: translate(20px, -20px) scale(1.1); }
-        }
-        
-        .phone-mockup {
-            transform: perspective(1000px) rotateY(-8deg) rotateX(3deg);
-            transition: transform 0.5s ease;
-        }
-        
-        .phone-mockup:hover {
-            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.02);
-        }
-        
-        .feature-icon {
-            background: linear-gradient(135deg, #8B5CF6, #EC4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            transition: transform 0.3s ease;
-        }
-        
-        .feature-card:hover .feature-icon {
-            transform: scale(1.2) rotate(5deg);
-        }
-        
-        .nav-scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .dark .nav-scrolled {
-            background: rgba(31, 41, 55, 0.95);
-        }
-        
-        .stat-number {
-            background: linear-gradient(135deg, #8B5CF6, #EC4899);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-        }
-        
-        .testimonial-card {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
-            border: 1px solid rgba(139, 92, 246, 0.2);
-        }
-        
-        .btn-shine {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-shine::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
-        }
-        
-        .btn-shine:hover::before {
-            left: 100%;
-        }
-        
-        .grid-pattern {
-            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0);
-            background-size: 40px 40px;
-        }
-        
-        .demo-chat {
-            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CJ Command Center — GroveMind</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    color: #d1d5db;
+    font-family: 'Courier New', 'Consolas', monospace;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(74,222,128,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 50%, rgba(249,115,22,0.04) 0%, transparent 60%);
+  }
+  .dashboard { max-width: 1200px; width: 100%; }
+
+  /* HEADER */
+  .header { text-align: center; margin-bottom: 40px; position: relative; }
+  .header::after {
+    content: ''; display: block; margin: 12px auto 0;
+    width: 80%; height: 3px;
+    background: linear-gradient(90deg, transparent, #4ade80, #f97316, transparent);
+  }
+  .header h1 {
+    font-family: 'Press Start 2P', monospace; font-size: 22px;
+    color: #4ade80; letter-spacing: 3px; margin-bottom: 6px;
+    text-shadow: 0 0 20px rgba(74,222,128,0.4), 0 0 40px rgba(74,222,128,0.15);
+  }
+  .header .subtitle {
+    font-family: 'Press Start 2P', monospace; font-size: 9px;
+    color: #f97316; letter-spacing: 2px; opacity: 0.8;
+  }
+  .header .grove-tag { font-size: 11px; color: #6b7280; margin-top: 8px; }
+
+  /* GRID */
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+  /* CARDS */
+  .card {
+    background: #111111; border: 2px solid #1f2937;
+    border-radius: 4px; padding: 20px; position: relative;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: #374151; }
+
+  .card-title {
+    font-family: 'Press Start 2P', monospace; font-size: 10px;
+    color: #4ade80; margin-bottom: 16px; padding-bottom: 10px;
+    border-bottom: 1px solid #1f2937;
+    display: flex; align-items: center; gap: 8px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .card-title .icon { font-size: 14px; color: #f97316; }
+  .card-title .count-badge {
+    font-family: 'Courier New', monospace; font-size: 10px;
+    color: #0a0a0a; background: #f97316;
+    padding: 2px 8px; border-radius: 2px; margin-left: auto;
+  }
+
+  /* WEATHER */
+  .weather-main { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+  .weather-temp {
+    font-family: 'Press Start 2P', monospace; font-size: 32px;
+    color: #f97316; text-shadow: 0 0 12px rgba(249,115,22,0.3);
+    line-height: 1;
+  }
+  .weather-emoji { font-size: 42px; }
+  .weather-desc {
+    font-family: 'Press Start 2P', monospace; font-size: 9px;
+    color: #9ca3af; margin-top: 4px;
+  }
+  .weather-details { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; }
+  .weather-stat {
+    background: #0f0f0f; border: 1px solid #1f2937;
+    padding: 10px; text-align: center; border-radius: 2px;
+  }
+  .weather-stat .label {
+    font-family: 'Press Start 2P', monospace; font-size: 7px;
+    color: #6b7280; margin-bottom: 4px;
+  }
+  .weather-stat .value {
+    font-family: 'Press Start 2P', monospace; font-size: 10px;
+    color: #d1d5db;
+  }
+  .weather-loading {
+    font-family: 'Press Start 2P', monospace; font-size: 9px;
+    color: #6b7280; animation: blink 1s steps(2) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0.3; } }
+  .weather-city {
+    font-family: 'Press Start 2P', monospace; font-size: 8px;
+    color: #6b7280; margin-top: 12px;
+    text-align: center; padding-top: 10px; border-top: 1px solid #1a1a1a;
+  }
+
+  /* CREW */
+  .crew-list { display: flex; flex-direction: column; gap: 6px; }
+  .crew-item {
+    display: flex; align-items: center; gap: 10px;
+    background: #0f0f0f; border: 1px solid #1a1a1a;
+    padding: 7px 12px; border-radius: 2px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .crew-item:hover { border-color: #374151; background: #141414; }
+  .crew-item.cj { border-left: 3px solid #4ade80; }
+  .crew-item .avatar {
+    width: 26px; height: 26px; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; flex-shrink: 0;
+  }
+  .crew-item .info { flex: 1; min-width: 0; }
+  .crew-item .name {
+    font-family: 'Press Start 2P', monospace; font-size: 7px;
+    color: #e5e7eb;
+  }
+  .crew-item .role { font-size: 8px; color: #6b7280; margin-top: 1px; }
+  .crew-item .status-dot {
+    width: 6px; height: 6px; border-radius: 0; flex-shrink: 0;
+  }
+  .status-online { background: #4ade80; box-shadow: 0 0 5px #4ade80; }
+  .status-away { background: #f97316; box-shadow: 0 0 5px #f97316; }
+  .status-offline { background: #374151; }
+
+  /* BOTS */
+  .bots-list { display: flex; flex-direction: column; gap: 10px; }
+  .bot-card {
+    display: flex; align-items: center; gap: 12px;
+    background: #0f0f0f; border: 1px solid #1a1a1a;
+    padding: 12px 14px; border-radius: 2px;
+  }
+  .bot-card .bot-icon { font-size: 22px; }
+  .bot-card .bot-info { flex: 1; }
+  .bot-card .bot-name {
+    font-family: 'Press Start 2P', monospace; font-size: 9px; color: #e5e7eb;
+  }
+  .bot-card .bot-meta { font-size: 9px; color: #6b7280; margin-top: 3px; }
+  .bot-card .bot-status {
+    font-family: 'Press Start 2P', monospace; font-size: 7px;
+    padding: 3px 8px; border-radius: 2px; letter-spacing: 0.5px;
+  }
+  .bot-status.online { color: #0a0a0a; background: #4ade80; }
+  .bot-status.offline { color: #9ca3af; background: #1f2937; }
+
+  /* QUICK ACTIONS */
+  .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .action-btn {
+    background: #0f0f0f; border: 1px solid #1f2937;
+    padding: 16px 10px; text-align: center; cursor: pointer;
+    transition: all 0.15s; border-radius: 2px;
+    font-family: 'Press Start 2P', monospace; font-size: 8px;
+    color: #d1d5db; text-decoration: none;
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+  }
+  .action-btn:hover {
+    border-color: #4ade80; background: #141414;
+    color: #4ade80; text-shadow: 0 0 8px rgba(74,222,128,0.3);
+  }
+  .action-btn .action-icon { font-size: 18px; }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 30px; text-align: center;
+    font-family: 'Press Start 2P', monospace; font-size: 7px;
+    color: #374151; letter-spacing: 1px;
+    border-top: 1px solid #1a1a1a; padding-top: 16px;
+  }
+  .footer span { color: #4ade80; }
+
+  /* CORNERS */
+  .corner-tl, .corner-tr, .corner-bl, .corner-br {
+    position: absolute; width: 8px; height: 8px;
+    border-color: #4ade80; border-style: solid; opacity: 0.4;
+  }
+  .corner-tl { top: -2px; left: -2px; border-width: 2px 0 0 2px; }
+  .corner-tr { top: -2px; right: -2px; border-width: 2px 2px 0 0; }
+  .corner-bl { bottom: -2px; right: -2px; border-width: 0 0 2px 2px; }
+  .corner-br { bottom: -2px; left: -2px; border-width: 0 2px 2px 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 800px) {
+    .grid { grid-template-columns: 1fr; }
+    .header h1 { font-size: 16px; }
+    .weather-details { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 500px) {
+    .actions-grid { grid-template-columns: 1fr; }
+    .weather-main { flex-direction: column; text-align: center; }
+    .weather-details { grid-template-columns: 1fr; }
+    .header h1 { font-size: 13px; }
+  }
+</style>
 </head>
-<body class="font-sans antialiased bg-gray-50 dark:bg-gray-900 transition-colors duration-300 overflow-x-hidden">
+<body>
 
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                        G
-                    </div>
-                    <span class="text-2xl font-serif font-bold gradient-text">GlamBot</span>
-                </div>
-                
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#features" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Возможности</a>
-                    <a href="#how-it-works" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Как работает</a>
-                    <a href="#faq" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">FAQ</a>
-                    <a href="https://t.me/Nailselegantstudio_bot" target="_blank" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors">Демо</a>
-                    <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-                        <svg id="sun-icon" class="w-5 h-5 hidden dark:block text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                        <svg id="moon-icon" class="w-5 h-5 block dark:hidden text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 24.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    </button>
-                    <a href="https://t.me/Nailselegantstudio_bot" target="_blank" class="bg-gradient-to-r from-primary to-secondary text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transform hover:scale-105 transition-all btn-shine">
-                        Попробовать демо
-                    </a>
-                </div>
-                
-                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
-                    <svg class="w-6 h-6 text-gray-700 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-            </div>
-        </div>
-        
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-800 shadow-lg absolute w-full">
-            <div class="px-4 pt-2 pb-4 space-y-2">
-                <a href="#features" class="block py-2 text-gray-700 dark:text-gray-300">Возможности</a>
-                <a href="#how-it-works" class="block py-2 text-gray-700 dark:text-gray-300">Как работает</a>
-                <a href="#faq" class="block py-2 text-gray-700 dark:text-gray-300">FAQ</a>
-                <a href="https://t.me/Nailselegantstudio_bot" target="_blank" class="block py-2 text-primary font-semibold">Попробовать демо →</a>
-            </div>
-        </div>
-    </nav>
+<div class="dashboard">
 
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden mesh-bg pt-20">
-        <div class="blob w-72 h-72 bg-purple-500 rounded-full top-20 left-10 mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div class="blob w-72 h-72 bg-pink-500 rounded-full top-40 right-10 mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div class="blob w-72 h-72 bg-yellow-500 rounded-full -bottom-8 left-20 mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <!-- Left Content -->
-                <div class="text-center lg:text-left relative z-20">
-                    <div class="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium mb-6">
-                        ✨ Для мастеров бровей и ресниц
-                    </div>
-                    
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-6 leading-tight">
-                        Ваш онлайн-<br>администратор<br>
-                        <span class="typing-cursor text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-pink-400" id="typing-text"></span>
-                    </h1>
-                    
-                    <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                        Автоматическая запись, AI-консультант и программа лояльности в одном Telegram-боте. Работает 24/7, настройка за 15 минут.
-                    </p>
-                    
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="https://t.me/Nailselegantstudio_bot" target="_blank" class="bg-white text-primary px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl transform hover:scale-105 transition-all btn-shine flex items-center justify-center gap-2">
-                            <span>Попробовать демо</span>
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
-                        </a>
-                        <button onclick="scrollToDemo()" class="glass text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-2">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span>Как это работает</span>
-                        </button>
-                    </div>
-                    
-                    <div class="mt-8 flex items-center justify-center lg:justify-start gap-6 text-white/80 text-sm md:text-base">
-                        <div class="text-center">
-                            <div class="text-2xl md:text-3xl font-bold text-white">24/7</div>
-                            <div class="text-xs md:text-sm">запись</div>
-                        </div>
-                        <div class="w-px h-10 bg-white/30"></div>
-                        <div class="text-center">
-                            <div class="text-2xl md:text-3xl font-bold text-white">AI</div>
-                            <div class="text-xs md:text-sm">консультант</div>
-                        </div>
-                        <div class="w-px h-10 bg-white/30"></div>
-                        <div class="text-center">
-                            <div class="text-2xl md:text-3xl font-bold text-white">15 мин</div>
-                            <div class="text-xs md:text-sm">настройка</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Right Content - Phone Only -->
-                <div class="relative flex justify-center items-center lg:h-[600px]">
-                    <!-- Phone Mockup -->
-                    <div class="phone-mockup relative z-10">
-                        <div class="bg-gray-900 rounded-[2.5rem] p-3 shadow-2xl border-4 border-gray-800 w-64 sm:w-72 mx-auto">
-                            <div class="bg-white dark:bg-gray-800 rounded-[2rem] overflow-hidden h-[500px] sm:h-[520px] relative">
-                                <!-- Chat Interface -->
-                                <div class="bg-gradient-to-r from-primary to-secondary p-3 text-white">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-sm">G</div>
-                                        <div>
-                                            <div class="font-semibold text-sm">GlamBot</div>
-                                            <div class="text-xs opacity-80">онлайн</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-3 space-y-2 h-full overflow-hidden bg-gray-50 dark:bg-gray-900">
-                                    <div class="flex justify-end">
-                                        <div class="bg-primary text-white rounded-2xl rounded-tr-sm px-3 py-2 max-w-[85%] text-xs">
-                                            Здравствуйте! Хочу на архитектуру бровей
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-start">
-                                        <div class="bg-white dark:bg-gray-700 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%] text-xs text-gray-800 dark:text-gray-200 shadow-sm">
-                                            Здравствуйте! 😊 Выберите услугу:
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-start">
-                                        <div class="space-y-1.5 w-full max-w-[85%]">
-                                            <button class="block w-full text-left bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 text-xs text-gray-700 dark:text-gray-200 shadow-sm">Архитектура — 1500₽</button>
-                                            <button class="block w-full text-left bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg px-3 py-2 text-xs text-gray-700 dark:text-gray-200 shadow-sm">Окрашивание — 800₽</button>
-                                            <button class="block w-full text-left bg-primary text-white border border-primary rounded-lg px-3 py-2 text-xs shadow-md">Комплекс — 2000₽ ✓</button>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-end">
-                                        <div class="bg-primary text-white rounded-2xl rounded-tr-sm px-3 py-2 max-w-[85%] text-xs">
-                                            Комплекс
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-start">
-                                        <div class="bg-white dark:bg-gray-700 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%] text-xs text-gray-800 dark:text-gray-200 shadow-sm">
-                                            Отлично! Выберите дату:
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-4 gap-1.5 max-w-[85%]">
-                                        <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-1.5 text-center text-xs shadow-sm">
-                                            <div class="text-gray-500 text-[10px]">Пн</div>
-                                            <div class="font-bold text-gray-700 dark:text-gray-200">24</div>
-                                        </div>
-                                        <div class="bg-primary text-white rounded-lg p-1.5 text-center text-xs shadow-md">
-                                            <div class="text-white/80 text-[10px]">Вт</div>
-                                            <div class="font-bold">25</div>
-                                        </div>
-                                        <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-1.5 text-center text-xs shadow-sm">
-                                            <div class="text-gray-500 text-[10px]">Ср</div>
-                                            <div class="font-bold text-gray-700 dark:text-gray-200">26</div>
-                                        </div>
-                                        <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-1.5 text-center text-xs shadow-sm">
-                                            <div class="text-gray-500 text-[10px]">Чт</div>
-                                            <div class="font-bold text-gray-700 dark:text-gray-200">27</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-start">
-                                        <div class="bg-white dark:bg-gray-700 rounded-2xl rounded-tl-sm px-3 py-2 max-w-[85%] text-xs text-gray-800 dark:text-gray-200 shadow-sm">
-                                            Доступное время:
-                                        </div>
-                                    </div>
-                                    <div class="grid grid-cols-3 gap-1.5 max-w-[85%]">
-                                        <div class="bg-primary text-white rounded-lg p-1.5 text-center text-xs shadow-sm">10:00</div>
-                                        <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-1.5 text-center text-xs text-gray-700 dark:text-gray-200 shadow-sm">11:30</div>
-                                        <div class="bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-1.5 text-center text-xs text-gray-700 dark:text-gray-200 shadow-sm">14:00</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-        </div>
-    </section>
+  <!-- HEADER -->
+  <div class="header">
+    <h1>▼ CJ COMMAND</h1>
+    <h1>CENTER</h1>
+    <div class="subtitle">♦ GroveMind ♦</div>
+    <div class="grove-tag">// grove-street — home //</div>
+  </div>
 
-    <!-- Features Section -->
-    <section id="features" class="py-24 bg-white dark:bg-gray-900 relative overflow-hidden">
-        <div class="absolute inset-0 grid-pattern opacity-50"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-4">
-                    Всё, что нужно <span class="gradient-text">бровисту</span> и <span class="gradient-text">лашмейкеру</span>
-                </h2>
-                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                    Полный набор инструментов для автоматизации записи клиентов. AI-консультант отвечает на вопросы, пока вы делаете красоту.
-                </p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="feature-card group p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 card-hover scroll-reveal">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-rose-400 to-rose-600 flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                        🤖
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">AI-консультант</h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Отвечает на вопросы клиентов об услугах, уходе за бровями и ресницами, помогает подобрать процедуру. Команда /ask — и искусственный интеллект работает за вас.
-                    </p>
-                </div>
-                
-                <div class="feature-card group p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 card-hover scroll-reveal">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                        📅
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Онлайн-запись 24/7</h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Клиенты записываются сами в любое время. Выбор услуги, даты и времени прямо в Telegram. Автоматическая проверка занятости слотов.
-                    </p>
-                </div>
-                
-                <div class="feature-card group p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 card-hover scroll-reveal">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                        🔔
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Автонапоминания</h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Бот автоматически напоминает о записи за 24 часа и за 2 часа до визита. Снижение количества отмен и опозданий до минимума.
-                    </p>
-                </div>
-                
-                <div class="feature-card group p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 card-hover scroll-reveal">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                        💎
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Программа лояльности</h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Баллы за визиты (1 балл + дополнительный за услуги от 2000₽). Статусы Silver, Gold, Platinum. Обмен баллов на скидки и бесплатные услуги.
-                    </p>
-                </div>
-                
-                <div class="feature-card group p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 card-hover scroll-reveal">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                        👤
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Профиль клиента</h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        История записей, накопленные баллы, статус лояльности, контактные данные. Всё в одном месте, доступно клиенту через /profile.
-                    </p>
-                </div>
-                
-                <div class="feature-card group p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 card-hover scroll-reveal">
-                    <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white text-2xl mb-6 group-hover:scale-110 transition-transform shadow-lg">
-                        👑
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Админ-панель</h3>
-                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
-                        Управление услугами, просмотр записей на сегодня, статистика доходов, массовые рассылки клиентам. Доступ по команде /admin.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <!-- GRID -->
+  <div class="grid">
 
-    <!-- AI Demo Section -->
-    <section class="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-                <div class="order-2 lg:order-1 scroll-reveal">
-                    <div class="demo-chat rounded-3xl p-6 shadow-2xl">
-                        <div class="space-y-4">
-                            <div class="flex justify-end">
-                                <div class="bg-primary text-white rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%]">
-                                    <p class="text-sm">Чем отличается ламинирование от ботокса бровей? 🤔</p>
-                                </div>
-                            </div>
-                            <div class="flex justify-start">
-                                <div class="bg-gray-700 text-gray-100 rounded-2xl rounded-tl-sm px-4 py-3 max-w-[90%]">
-                                    <p class="text-sm mb-2"><span class="text-purple-400 font-semibold">🤖 AI-консультант GlamBot:</span></p>
-                                    <p class="text-sm leading-relaxed">
-                                        <strong>Ламинирование</strong> — фиксация волосков в нужном направлении, эффект 4-6 недель.<br><br>
-                                        <strong>Ботокс</strong> — глубокое питание и восстановление волоса, эффект 2-3 месяца.<br><br>
-                                        Для сухих и повреждённых бровей рекомендую ботокс, для коррекции направления роста — ламинирование! ✨
-                                    </p>
-                                    <div class="flex gap-2 mt-3">
-                                        <button class="bg-primary/20 text-primary text-xs px-3 py-1 rounded-full hover:bg-primary/30 transition-colors">📅 Записаться</button>
-                                        <button class="bg-gray-600 text-gray-200 text-xs px-3 py-1 rounded-full hover:bg-gray-500 transition-colors">❓ Ещё вопрос</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex justify-end">
-                                <div class="bg-primary text-white rounded-2xl rounded-tr-sm px-4 py-3 max-w-[80%]">
-                                    <p class="text-sm">Спасибо! Запишусь на ботокс 😊</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="order-1 lg:order-2 scroll-reveal">
-                    <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-6">
-                        AI отвечает на вопросы,<br>пока вы <span class="gradient-text">работаете</span>
-                    </h2>
-                    <p class="text-lg text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-                        Клиенты часто спрашивают о различиях процедур, уходе после наращивания, подготовке к визиту? AI-консультант ответит вместо вас мгновенно, 24/7.
-                    </p>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Консультации по услугам и уходу</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Помощь в выборе процедуры</span>
-                        </li>
-                        <li class="flex items-center gap-3 text-gray-700 dark:text-gray-300">
-                            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            <span>Мгновенные ответы без ожидания</span>
-                        </li>
-                    </ul>
-                    <a href="https://t.me/Nailselegantstudio_bot" target="_blank" class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all">
-                        Попробовать AI в демо <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- ====== WEATHER ====== -->
+    <div class="card">
+      <div class="corner-tl"></div><div class="corner-tr"></div>
+      <div class="corner-bl"></div><div class="corner-br"></div>
 
-    <!-- How It Works -->
-    <section id="how-it-works" class="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-4">
-                    Настройка за <span class="gradient-text">15 минут</span>
-                </h2>
-                <p class="text-xl text-gray-600 dark:text-gray-400">Три простых шага до автоматизации записи</p>
-            </div>
-            
-            <div class="relative">
-                <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-accent transform -translate-y-1/2 rounded-full opacity-30"></div>
-                
-                <div class="grid md:grid-cols-3 gap-8 relative">
-                    <div class="relative scroll-reveal">
-                        <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 relative z-10 h-full">
-                            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-r from-primary to-secondary text-white flex items-center justify-center text-xl font-bold shadow-lg">
-                                1
-                            </div>
-                            <div class="mt-6 text-center">
-                                <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-4xl">
-                                    🤖
-                                </div>
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Создайте бота</h3>
-                                <p class="text-gray-600 dark:text-gray-400">
-                                    Напишите @BotFather, создайте бота, получите токен. Узнайте свой ID в @userinfobot. Всё просто!
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="relative scroll-reveal" style="transition-delay: 200ms;">
-                        <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 relative z-10 h-full">
-                            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-r from-secondary to-accent text-white flex items-center justify-center text-xl font-bold shadow-lg">
-                                2
-                            </div>
-                            <div class="mt-6 text-center">
-                                <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-pink-100 dark:bg-pink-900/30 flex items-center justify-center text-4xl">
-                                    ⚙️
-                                </div>
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Настройте за 15 мин</h3>
-                                <p class="text-gray-600 dark:text-gray-400">
-                                    Добавьте токен и ID админа. Запустите бота командой python bot.py. Добавьте услуги через /admin.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="relative scroll-reveal" style="transition-delay: 400ms;">
-                        <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 relative z-10 h-full">
-                            <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 rounded-full bg-gradient-to-r from-accent to-yellow-500 text-white flex items-center justify-center text-xl font-bold shadow-lg">
-                                3
-                            </div>
-                            <div class="mt-6 text-center">
-                                <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center text-4xl">
-                                    ✨
-                                </div>
-                                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Принимайте записи</h3>
-                                <p class="text-gray-600 dark:text-gray-400">
-                                    Делитесь ссылкой на бота. Клиенты записываются сами, AI отвечает на вопросы. Вы делаете красоту!
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      <div class="card-title">
+        <span class="icon">☁</span> Погода / Weather
+      </div>
 
-    <!-- Stats Section -->
-    <section class="py-20 bg-gradient-to-r from-primary to-secondary relative overflow-hidden">
-        <div class="absolute inset-0 bg-black/10"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center text-white">
-                <div class="scroll-reveal">
-                    <div class="text-4xl md:text-5xl font-bold mb-2">24/7</div>
-                    <div class="text-white/80">работает бот</div>
-                </div>
-                <div class="scroll-reveal" style="transition-delay: 100ms;">
-                    <div class="text-4xl md:text-5xl font-bold mb-2">15 мин</div>
-                    <div class="text-white/80">на настройку</div>
-                </div>
-                <div class="scroll-reveal" style="transition-delay: 200ms;">
-                    <div class="text-4xl md:text-5xl font-bold mb-2">AI</div>
-                    <div class="text-white/80">консультант</div>
-                </div>
-                <div class="scroll-reveal" style="transition-delay: 300ms;">
-                    <div class="text-4xl md:text-5xl font-bold mb-2">0₽</div>
-                    <div class="text-white/80">абонентская плата</div>
-                </div>
-            </div>
-        </div>
-    </section>
+      <div class="weather-main" id="weather-main">
+        <div class="weather-loading">>> FETCHING DATA...</div>
+      </div>
 
-    <!-- FAQ Section -->
-    <section id="faq" class="py-24 bg-white dark:bg-gray-900">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 scroll-reveal">
-                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-4">
-                    Частые <span class="gradient-text">вопросы</span>
-                </h2>
-            </div>
-            
-            <div class="space-y-4">
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 scroll-reveal">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">📅 Как клиенты записываются?</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Клиент нажимает /start, выбирает услугу, дату и время из доступных слотов. Бот автоматически проверяет занятость и подтверждает запись.</p>
-                </div>
-                
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 scroll-reveal">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">🤖 Что такое AI-консультант?</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Искусственный интеллект, который отвечает на вопросы клиентов об услугах, уходе, помогает выбрать процедуру. Работает по команде /ask 24/7.</p>
-                </div>
-                
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 scroll-reveal">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">💎 Как работает программа лояльности?</h3>
-                    <p class="text-gray-600 dark:text-gray-400">1 балл за каждый визит + 1 дополнительный за услуги от 2000₽. Статусы Silver/Gold/Platinum. Баллы меняются на скидки и бесплатные услуги.</p>
-                </div>
-                
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 scroll-reveal">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">⏰ Какие напоминания приходят?</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Автоматические напоминания за 24 часа и за 2 часа до визита. Клиенты не забывают, вы не теряете время.</p>
-                </div>
-                
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 scroll-reveal">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">👑 Что доступно в админ-панели?</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Управление услугами и ценами, просмотр записей на сегодня, статистика доходов, массовые рассылки клиентам. Доступ по команде /admin.</p>
-                </div>
-                
-                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 scroll-reveal">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">💰 Сколько стоит?</h3>
-                    <p class="text-gray-600 dark:text-gray-400">Бот бесплатный в использовании. Вы платите только за хостинг (VPS от 300₽/мес), если хотите, чтобы бот работал 24/7. Настройка занимает 15 минут.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+      <div class="weather-details" id="weather-details">
+        <div class="weather-stat"><div class="weather-loading" style="font-size:7px;">loading...</div></div>
+        <div class="weather-stat"><div class="weather-loading" style="font-size:7px;">loading...</div></div>
+        <div class="weather-stat"><div class="weather-loading" style="font-size:7px;">loading...</div></div>
+        <div class="weather-stat"><div class="weather-loading" style="font-size:7px;">loading...</div></div>
+      </div>
 
-    <!-- CTA Section -->
-    <section class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-accent"></div>
-        <div class="absolute inset-0 bg-black/20"></div>
-        
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <h2 class="text-4xl md:text-6xl font-serif font-bold text-white mb-6 scroll-reveal">
-                Запустите своего<br>бота уже сегодня!
-            </h2>
-            <p class="text-xl text-white/90 mb-10 scroll-reveal">
-                Попробуйте демо-версию прямо сейчас. Настройка займёт 15 минут, а экономия времени — 15+ часов в неделю.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center scroll-reveal">
-                <a href="https://t.me/Nailselegantstudio_bot" target="_blank" class="bg-white text-primary px-8 py-4 rounded-full font-bold text-lg hover:shadow-2xl transform hover:scale-105 transition-all btn-shine">
-                    Попробовать демо
-                </a>
-            </div>
-        </div>
-    </section>
+      <div class="weather-city">📍 Сызрань / Syzran — 53.155, 48.474</div>
+    </div>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold">G</div>
-                        <span class="text-xl font-serif font-bold">GlamBot</span>
-                    </div>
-                    <p class="text-gray-400 text-sm">
-                        Ваш онлайн-администратор для бровей и ресниц. Автоматическая запись, AI-консультант и программа лояльности в Telegram.
-                    </p>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Продукт</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#features" class="hover:text-white transition-colors">Возможности</a></li>
-                        <li><a href="https://t.me/Nailselegantstudio_bot" target="_blank" class="hover:text-white transition-colors">Демо-бот</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Поддержка</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#faq" class="hover:text-white transition-colors">FAQ</a></li>
-                        <li><a href="https://t.me/glambot_support" target="_blank" class="hover:text-white transition-colors">Написать нам</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Контакты</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="mailto:support@glambot.ru" class="hover:text-white transition-colors">support@glambot.ru</a></li>
-                        <li><a href="https://t.me/glambot_support" target="_blank" class="hover:text-white transition-colors">@glambot_support</a></li>
-                        <li>Отвечаем 24/7</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-gray-500 text-sm">© 2026 GlamBot. Все права защищены.</p>
-                <div class="flex gap-4 mt-4 md:mt-0">
-                    <a href="https://t.me/Nailselegantstudio_bot" target="_blank" class="text-gray-400 hover:text-white transition-colors">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18 1.897-.962 6.502-1.359 8.627-.168.9-.5 1.201-.82 1.23-.697.064-1.226-.461-1.901-.903-1.056-.692-1.653-1.123-2.678-1.799-1.185-.781-.417-1.21.258-1.911.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.139-5.062 3.345-.479.329-.913.489-1.302.481-.428-.009-1.252-.242-1.865-.442-.751-.244-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.831-2.529 6.998-3.015 3.333-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.121.099.154.232.17.325.015.093.034.305.019.471z"/></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- ====== CREW STATUS ====== -->
+    <div class="card">
+      <div class="corner-tl"></div><div class="corner-tr"></div>
+      <div class="corner-bl"></div><div class="corner-br"></div>
 
-    <script>
-        // Typing effect
-        const texts = ['брови', 'ресницы'];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const typingElement = document.getElementById('typing-text');
-        
-        function type() {
-            const currentText = texts[textIndex];
-            
-            if (isDeleting) {
-                typingElement.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typingElement.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-            }
-            
-            let typeSpeed = isDeleting ? 50 : 100;
-            
-            if (!isDeleting && charIndex === currentText.length) {
-                typeSpeed = 2000;
-                isDeleting = true;
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-                typeSpeed = 500;
-            }
-            
-            setTimeout(type, typeSpeed);
-        }
-        
-        type();
-        
-        // Scroll reveal animation
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.scroll-reveal').forEach((el) => observer.observe(el));
-        
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('nav-scrolled');
-            } else {
-                navbar.classList.remove('nav-scrolled');
-            }
-        });
-        
-        // Theme toggle
-        function toggleTheme() {
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-        }
-        
-        // Check saved theme
-        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        }
-        
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-        
-        // Smooth scroll
-        function scrollToDemo() {
-            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Parallax effect for blobs
-        document.addEventListener('mousemove', (e) => {
-            const blobs = document.querySelectorAll('.blob');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            blobs.forEach((blob, index) => {
-                const speed = (index + 1) * 20;
-                const xOffset = (window.innerWidth / 2 - e.clientX) / speed;
-                const yOffset = (window.innerHeight / 2 - e.clientY) / speed;
-                blob.style.transform = `translate(${xOffset}px, ${yOffset}px)`;
-            });
-        });
-        
-        // Add animation delay to blobs
-        document.querySelectorAll('.blob').forEach((blob, index) => {
-            blob.style.animationDelay = `${index * 2}s`;
-        });
-    </script>
+      <div class="card-title">
+        <span class="icon">★</span> Crew Status
+        <span class="count-badge">1+7</span>
+      </div>
+
+      <div class="crew-list">
+        <div class="crew-item cj">
+          <div class="avatar">👑</div>
+          <div class="info">
+            <div class="name">CJ (Carl Johnson)</div>
+            <div class="role">👑 Лидер • Grove Street Families</div>
+          </div>
+          <div class="status-dot status-online"></div>
+        </div>
+        <div class="crew-item">
+          <div class="avatar">💛</div>
+          <div class="info">
+            <div class="name">Denise</div>
+            <div class="role">🏙️ Дениз • Улица, drive-by</div>
+          </div>
+          <div class="status-dot status-online"></div>
+        </div>
+        <div class="crew-item">
+          <div class="avatar">💜</div>
+          <div class="info">
+            <div class="name">Millie</div>
+            <div class="role">💰 Милли • Бизнес, казино</div>
+          </div>
+          <div class="status-dot status-away"></div>
+        </div>
+        <div class="crew-item">
+          <div class="avatar">❤</div>
+          <div class="info">
+            <div class="name">Barbara</div>
+            <div class="role">👮 Барбара • Коп, связи</div>
+          </div>
+          <div class="status-dot status-offline"></div>
+        </div>
+        <div class="crew-item">
+          <div class="avatar">💚</div>
+          <div class="info">
+            <div class="name">Katie</div>
+            <div class="role">🧪 Кэти • Тесты, QA</div>
+          </div>
+          <div class="status-dot status-online"></div>
+        </div>
+        <div class="crew-item">
+          <div class="avatar">🧡</div>
+          <div class="info">
+            <div class="name">Michelle</div>
+            <div class="role">🔧 Мишель • Механик, скорость</div>
+          </div>
+          <div class="status-dot status-away"></div>
+        </div>
+        <div class="crew-item">
+          <div class="avatar">💙</div>
+          <div class="info">
+            <div class="name">Helena</div>
+            <div class="role">💣 Хелена • Оружие, тишина</div>
+          </div>
+          <div class="status-dot status-offline"></div>
+        </div>
+        <div class="crew-item">
+          <div class="avatar">🖤</div>
+          <div class="info">
+            <div class="name">Catalina</div>
+            <div class="role">🔥 Каталина • Дизайн, лендинги</div>
+          </div>
+          <div class="status-dot status-online"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== BOTS STATUS ====== -->
+    <div class="card">
+      <div class="corner-tl"></div><div class="corner-tr"></div>
+      <div class="corner-bl"></div><div class="corner-br"></div>
+
+      <div class="card-title">
+        <span class="icon">🤖</span> Bots Status
+        <span class="count-badge">1</span>
+      </div>
+
+      <div class="bots-list">
+        <div class="bot-card">
+          <div class="bot-icon">📦</div>
+          <div class="bot-info">
+            <div class="bot-name">DealBot</div>
+            <div class="bot-meta">Ozon price monitor • Docker</div>
+          </div>
+          <div class="bot-status online">ONLINE</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== QUICK ACTIONS ====== -->
+    <div class="card">
+      <div class="corner-tl"></div><div class="corner-tr"></div>
+      <div class="corner-bl"></div><div class="corner-br"></div>
+
+      <div class="card-title">
+        <span class="icon">⚡</span> Quick Actions
+      </div>
+
+      <div class="actions-grid">
+        <div class="action-btn" onclick="fetchWeather();">
+          <span class="action-icon">🌤</span>
+          Погода / Refresh
+        </div>
+        <div class="action-btn" onclick="window.open('https://github.com/Forward-Future/loopy','_blank');">
+          <span class="action-icon">🔄</span>
+          Loopy Library
+        </div>
+        <div class="action-btn" onclick="document.querySelector('.dashboard').style.borderColor='#4ade80';alert('📦 GroveMind stack — all systems nominal');">
+          <span class="action-icon">📦</span>
+          Обнова / Update
+        </div>
+        <div class="action-btn" onclick="fetchWeather();">
+          <span class="action-icon">📊</span>
+          Статус / Status
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>◄</span> GROVE STREET — HOME <span>►</span><br>
+    <span id="update-time">Updating...</span>
+  </div>
+
+</div>
+
+<script>
+// Weather code map
+const WMO = {
+  0:['Clear sky','☀️'],1:['Mainly clear','🌤'],2:['Partly cloudy','⛅'],3:['Overcast','☁️'],
+  45:['Fog','🌫'],48:['Depositing rime fog','🌫'],
+  51:['Light drizzle','🌦'],53:['Moderate drizzle','🌦'],55:['Dense drizzle','🌦'],
+  56:['Light freezing drizzle','🌦'],57:['Dense freezing drizzle','🌦'],
+  61:['Slight rain','🌧'],63:['Moderate rain','🌧'],65:['Heavy rain','🌧'],
+  66:['Light freezing rain','🌧'],67:['Heavy freezing rain','🌧'],
+  71:['Slight snow','❄️'],73:['Moderate snow','❄️'],75:['Heavy snow','❄️'],
+  77:['Snow grains','❄️'],
+  80:['Slight rain showers','🌦'],81:['Moderate rain showers','🌧'],82:['Violent rain showers','🌧'],
+  85:['Slight snow showers','❄️'],86:['Heavy snow showers','❄️'],
+  95:['Thunderstorm','⛈'],96:['Thunderstorm with slight hail','⛈'],99:['Thunderstorm with heavy hail','⛈']
+};
+
+function getWMO(code) {
+  let w = WMO[code];
+  return w ? w : [code.toString(), '🌡'];
+}
+
+async function fetchWeather() {
+  const mainEl = document.getElementById('weather-main');
+  const detEl = document.getElementById('weather-details');
+
+  mainEl.innerHTML = '<div class="weather-loading">>> FETCHING DATA...</div>';
+  detEl.innerHTML = '<div class="weather-stat"><div class="weather-loading" style="font-size:7px;">loading...</div></div>'.repeat(4);
+
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=53.155&longitude=48.474'
+      + '&current=temperature_2m,apparent_temperature,relative_humidity_2m,precipitation,weather_code,wind_speed_10m,pressure_msl'
+      + '&daily=temperature_2m_max,temperature_2m_min,precipitation_sum'
+      + '&timezone=Europe/Samara';
+    const res = await fetch(url);
+    const d = await res.json();
+    const c = d.current;
+    const daily = d.daily;
+
+    const temp = c.temperature_2m;
+    const feels = c.apparent_temperature;
+    const hum = c.relative_humidity_2m;
+    const precip = c.precipitation || 0;
+    const wind = c.wind_speed_10m;
+    const press = c.pressure_msl ? Math.round(c.pressure_msl) : '--';
+    const wmo = getWMO(c.weather_code);
+    const tmax = daily.temperature_2m_max[0];
+    const tmin = daily.temperature_2m_min[0];
+
+    const sign = temp >= 0 ? '+' : '';
+    const signF = feels >= 0 ? '+' : '';
+
+    document.getElementById('update-time').textContent = 'Last updated: ' + new Date().toLocaleString('ru-RU', {timeZone:'Europe/Samara'});
+
+    mainEl.innerHTML = `
+      <div style="font-size:42px;line-height:1;">${wmo[1]}</div>
+      <div>
+        <div class="weather-temp">${sign}${Math.round(temp)}°C</div>
+        <div class="weather-desc">${wmo[0]} • feels ${signF}${Math.round(feels)}°C</div>
+      </div>
+    `;
+
+    detEl.innerHTML = `
+      <div class="weather-stat">
+        <div class="label">HUMIDITY</div>
+        <div class="value">${hum}%</div>
+      </div>
+      <div class="weather-stat">
+        <div class="label">WIND</div>
+        <div class="value">${wind.toFixed(1)} km/h</div>
+      </div>
+      <div class="weather-stat">
+        <div class="label">PRESSURE</div>
+        <div class="value">${press} hPa</div>
+      </div>
+      <div class="weather-stat">
+        <div class="label">MIN/MAX</div>
+        <div class="value">${Math.round(tmin)}/${Math.round(tmax)}°C</div>
+      </div>
+    `;
+  } catch(e) {
+    mainEl.innerHTML = '<div style="color:#fb7185;font-family:\'Press Start 2P\',monospace;font-size:9px;">⚠ ERROR: ' + e.message + '</div>';
+  }
+}
+
+window.addEventListener('DOMContentLoaded', fetchWeather);
+</script>
+
 </body>
 </html>
