@@ -1071,7 +1071,7 @@ async function loadDashboard() {
       recentBody.innerHTML = data.recent_activity.map(r => `
         <tr>
           <td style="max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${r.title}">${r.title || '—'}</td>
-          <td>${formatPrice(r.current_price)}</td>
+          <td>${formatPrice(r.current_price ?? r.price ?? 0)}</td>
           <td>${formatDateShort(r.last_check)}</td>
         </tr>
       `).join('');
@@ -1135,8 +1135,8 @@ function renderUsersTable(users) {
         <td>${formatDateShort(u.last_activity)}</td>
         <td>
           <div class="btn-group">
-            <button class="btn btn-sm" onclick="viewUserProducts(${u.user_id})">📦</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteUserProducts(${u.user_id})" title="Удалить все товары">🗑</button>
+            <button class="btn btn-sm" onclick="viewUserProducts(${u.user_id})" title="Посмотреть товары">📦</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteUserProducts(${u.user_id})" title="Удалить все товары пользователя">🗑</button>
           </div>
         </td>
       </tr>
@@ -1179,8 +1179,8 @@ async function viewUserProducts(userId) {
           <td>${formatDateShort(p.last_check)}</td>
           <td>
             <div class="btn-group">
-              <button class="btn btn-sm" onclick="viewPriceHistory(${p.id})">📈</button>
-              <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})">✕</button>
+              <button class="btn btn-sm" onclick="viewPriceHistory(${p.id})" title="История цен">📈</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteProduct(${p.id})" title="Удалить товар">✕</button>
             </div>
           </td>
         </tr>
@@ -1356,8 +1356,8 @@ async function loadTariffs() {
             <td>${t.expires_at ? formatDate(t.expires_at) : '<span style="color:var(--text-muted);">Бессрочно</span>'}</td>
             <td>
               <div class="btn-group">
-                <button class="btn btn-sm" onclick="editTariff(${t.user_id}, '${t.tariff}', '${t.expires_at || ''}')">✏️</button>
-                <button class="btn btn-sm btn-danger" onclick="deleteTariff(${t.user_id})">✕</button>
+                <button class="btn btn-sm" onclick="editTariff(${t.user_id}, '${t.tariff}', '${t.expires_at || ''}')" title="Редактировать тариф">✏️</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteTariff(${t.user_id})" title="Удалить тариф">✕</button>
               </div>
             </td>
           </tr>
