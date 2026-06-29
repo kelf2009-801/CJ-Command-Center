@@ -1033,13 +1033,13 @@ async function loadDashboard() {
       <div class="stat-card">
         <div class="card-icon">🔔</div>
         <div class="card-label">Алертов</div>
-        <div class="card-value">${data.total_notified}</div>
+        <div class="card-value">${data.notified ?? 0}</div>
         <div class="card-sub">отправлено</div>
       </div>
       <div class="stat-card">
         <div class="card-icon">📉</div>
         <div class="card-label">Падений цен</div>
-        <div class="card-value">${data.price_drops}</div>
+        <div class="card-value">${data.price_drops ?? data.notified ?? 0}</div>
         <div class="card-sub">ниже целевой</div>
       </div>
       <div class="stat-card">
@@ -1076,7 +1076,7 @@ async function loadDashboard() {
       topBody.innerHTML = data.top_users.map((u, i) => `
         <tr>
           <td><span style="color:var(--accent);">#${u.user_id}</span></td>
-          <td>${u.cnt} товаров</td>
+          <td>${u.product_count ?? u.cnt ?? 0} товаров</td>
           <td><button class="btn btn-sm" onclick="viewUserProducts(${u.user_id})">📋 Товары</button></td>
         </tr>
       `).join('');
@@ -1319,13 +1319,15 @@ async function loadTariffs() {
     cardsDiv.innerHTML = tariffOrder.map(t => {
       const def = defs[t] || {};
       const vipClass = t === 'vip' ? ' vip-card' : '';
+      const limitVal = def.max_products || def.limit || '?';
+      const intervalVal = def.interval_min || (def.check_interval ? Math.round(def.check_interval / 60) : '?');
       return `
         <div class="tariff-card${vipClass}">
           <div class="tariff-icon">${tariffIcons[t]}</div>
           <div class="tariff-name" style="color:${def.color || '#4CAF50'}">${tariffNames[t]}</div>
-          <div class="tariff-limit">${def.limit || '?'}</div>
+          <div class="tariff-limit">${limitVal}</div>
           <div style="font-size:12px;color:var(--text-muted);">товаров</div>
-          <div class="tariff-interval">⏱ Проверка: каждые ${def.interval_min || '?'} мин</div>
+          <div class="tariff-interval">⏱ Проверка: каждые ${intervalVal} мин</div>
           <div class="tariff-users">👥 ${counts[t] || 0} пользователей</div>
         </div>
       `;
