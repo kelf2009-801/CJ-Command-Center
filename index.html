@@ -66,6 +66,78 @@
     66% { transform: translate(-20px, 20px) scale(0.95); }
   }
 
+  /* === WEATHER ANIMATIONS (CSS only, no images) === */
+  .weather-bg {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 20px 20px 0 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .weather-bg .rain-drop {
+    position: absolute;
+    width: 1.5px;
+    background: linear-gradient(transparent, rgba(74,222,128,0.35));
+    animation: rainFall linear infinite;
+  }
+  @keyframes rainFall {
+    0% { transform: translateY(-20px); opacity: 0; }
+    15% { opacity: 1; }
+    100% { transform: translateY(320px); opacity: 0; }
+  }
+  .weather-bg .lightning-flash {
+    position: absolute;
+    inset: 0;
+    background: rgba(200,220,255,0.06);
+    opacity: 0;
+    animation: flashBang 7s ease-in-out infinite;
+  }
+  @keyframes flashBang {
+    0%, 90%, 100% { opacity: 0; }
+    91% { opacity: 0.9; }
+    92% { opacity: 0; }
+    94% { opacity: 0.5; }
+    95% { opacity: 0; }
+  }
+  .weather-bg .sun-pulse {
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(249,115,22,0.25) 0%, rgba(251,191,36,0.1) 30%, transparent 70%);
+    animation: sunGlow 4s ease-in-out infinite;
+  }
+  @keyframes sunGlow {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.3); opacity: 0.7; }
+  }
+  .weather-bg .fog-drift {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(74,222,128,0.05), rgba(249,115,22,0.03), transparent);
+    animation: fogMove 8s ease-in-out infinite;
+  }
+  @keyframes fogMove {
+    0%, 100% { transform: translateX(-15%); opacity: 0.2; }
+    50% { transform: translateX(15%); opacity: 0.5; }
+  }
+  .weather-bg .cloud-drift {
+    position: absolute;
+    color: rgba(255,255,255,0.04);
+    font-size: 70px;
+    animation: cloudFloat 20s linear infinite;
+  }
+  @keyframes cloudFloat {
+    0% { transform: translateX(-120px); }
+    100% { transform: translateX(420px); }
+  }
+  .card .card-title, .card .weather-main,
+  .card .weather-details, .card .weather-city {
+    position: relative;
+    z-index: 1;
+  }
+
   /* Scrollbar */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: #0a0a0f; }
@@ -602,7 +674,61 @@
   });
 })();
 
-// WEATHER CODES
+// ===== WEATHER ANIMATION =====
+function setWeatherBg(code) {
+  const card = document.querySelector('.card');
+  if (!card) return;
+  const old = card.querySelector('.weather-bg');
+  if (old) old.remove();
+  const bg = document.createElement('div');
+  bg.className = 'weather-bg';
+  // Thunderstorm (95-99) or heavy rain
+  if (code >= 95 || code === 65 || code === 82) {
+    const l = document.createElement('div');
+    l.className = 'lightning-flash';
+    bg.appendChild(l);
+    for (let i = 0; i < 40; i++) {
+      const d = document.createElement('div');
+      d.className = 'rain-drop';
+      d.style.left = Math.random() * 100 + '%';
+      d.style.height = (Math.random() * 18 + 5) + 'px';
+      d.style.animationDuration = (Math.random() * 0.4 + 0.2) + 's';
+      d.style.animationDelay = Math.random() * 3 + 's';
+      bg.appendChild(d);
+    }
+  } else if ([51,53,55,61,63,80,81].includes(code)) {
+    for (let i = 0; i < 25; i++) {
+      const d = document.createElement('div');
+      d.className = 'rain-drop';
+      d.style.left = Math.random() * 100 + '%';
+      d.style.height = (Math.random() * 12 + 3) + 'px';
+      d.style.animationDuration = (Math.random() * 0.5 + 0.4) + 's';
+      d.style.animationDelay = Math.random() * 4 + 's';
+      d.style.opacity = '0.3';
+      bg.appendChild(d);
+    }
+  } else if ([45,48].includes(code)) {
+    const f = document.createElement('div');
+    f.className = 'fog-drift';
+    bg.appendChild(f);
+  } else if (code <= 1) {
+    const s = document.createElement('div');
+    s.className = 'sun-pulse';
+    bg.appendChild(s);
+  } else if (code >= 2) {
+    for (let i = 0; i < 4; i++) {
+      const c = document.createElement('div');
+      c.className = 'cloud-drift';
+      c.textContent = '☁';
+      c.style.top = (10 + i * 20) + '%';
+      c.style.animationDelay = (i * 5) + 's';
+      bg.appendChild(c);
+    }
+  }
+  card.appendChild(bg);
+}
+
+// ===== WEATHER CODES
 const WMO = {
   0:['Ясно','☀️'],1:['Малооблачно','🌤'],2:['Облачно','⛅'],3:['Пасмурно','☁️'],
   45:['Туман','🌫'],51:['Морось','🌦'],53:['Морось','🌦'],61:['Дождь','🌧'],
@@ -641,6 +767,8 @@ async function fetchWeather() {
       <div class="weather-stat"><div class="label">ВЕТЕР</div><div class="value">${c.wind_speed_10m.toFixed(1)} км/ч</div></div>
       <div class="weather-stat"><div class="label">ДАВЛЕНИЕ</div><div class="value">${c.pressure_msl ? Math.round(c.pressure_msl) : '--'} гПа</div></div>
       <div class="weather-stat"><div class="label">MIN / MAX</div><div class="value">${Math.round(j.daily.temperature_2m_min[0])} / ${Math.round(j.daily.temperature_2m_max[0])}°C</div></div>`;
+
+    setWeatherBg(c.weather_code);
   } catch(e) {
     m.innerHTML = '<div style="color:#f87171;font-size:13px;">⚠ Ошибка: ' + e.message + '</div>';
   }
